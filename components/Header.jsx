@@ -5,6 +5,8 @@ import useOutsideClick from "../hooks/useOutsideClick";
 import { useOrbis, User, UserPopup, Chat, Post } from "@orbisclub/components";
 import { getTimestamp } from "../utils";
 import { useRouter } from 'next/router';
+import HamburgerMenu from './HarmbugerMenu';
+import Sidebar from './HarmbugerMenu';
 
 function Header() {
   const { orbis, user, connecting, setConnectModalVis } = useOrbis();
@@ -46,10 +48,13 @@ function Header() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Site branding */}
+            <div className="shrink-0 mr-4 text-black">
+            <Sidebar/>
+            </div>
             <div className="shrink-0 mr-4">
               {/* Logo container */}
               <Link href="/" className="text-primary">
-                <Logo />
+                 <Logo /> 
               </Link>
             </div>
 
@@ -60,12 +65,7 @@ function Header() {
                 <li className="hidden md:flex">
                   <SearchBar />
                 </li>
-                <li>
-                  <Link className="text-sm font-medium hover:underline px-3 lg:px-5 py-2 flex items-center transition duration-150 ease-in-out"
-                    href="/post/kjzl6cwe1jw14b9pin02aak0ot08wvnrhzf8buujkop28swyxnvtsjdye742jo6">
-                    Learn more
-                  </Link>
-                </li>
+                
                 {/** Show connect button or user connected */}
                 {user ?
                   <li className="flex items-center relative ml-1 mr-1">
