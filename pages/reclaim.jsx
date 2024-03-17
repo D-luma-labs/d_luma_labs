@@ -1,0 +1,73 @@
+import { Reclaim } from '@reclaimprotocol/js-sdk'
+import { useState } from 'react';
+import QRCode from "react-qr-code";
+
+export default function ReclaimPage(){
+
+    const [url, setUrl] = useState("")
+    const reclaimClient = new Reclaim.ProofRequest("0x0b28F082B70eA22C78efc82f50b0d859cd06cbb0",{ log: true} )
+
+    async function generateVerificationRequest() {
+       // const providerId = 'PROVIDER_ID' //TODO: replace with your provider ids you had selected while creating the application
+
+        const providerIds = [
+            'a5f71e67-9ab6-4d2f-9e7d-27c1dfa398b7', // instadetails
+            '03cdff35-6c27-4626-8231-2b298c3538c0', // LinkedIn Analytics Data
+            '309e9bc9-be15-4b46-8212-6cc1c0ce14a2', // Facebook account associated with Instagram.
+            'a1775a5c-9664-4c6e-9abb-87ae51d2ccec', // Insta Story Views
+            '5dbf61bc-1b14-454c-9c16-bbe4dcf262f6', // Instagram Story Views
+            '475b5501-427b-47c8-b007-fb7837cd8b5c', // Twitter Credentials
+        ];
+
+        const providerIdsUber = [
+            '5e96617c-351c-4f76-a6af-556ee7fcb522', // Uber Us - 2
+        ];
+
+        await reclaimClient.addContext(
+            (`69ibNjkeigZRS9z7JhUsFqb2qVYYC2Ds8urY3j9hCKj3`),
+            ('for d-luma-labs truth chain platform. This will improve the platofrm with authentic data Thanks!!')
+        )
+
+        await reclaimClient.buildProofRequest(providerIdsUber[0])
+
+        reclaimClient.setSignature(
+            await reclaimClient.generateSignature(
+              "0x2a75cd9f48a3bc85b386596fdab0e5fa08d64bbdaf77384c4e8a19669e3e6e21" //TODO : replace with your APP_SECRET
+            )
+          )
+
+
+          const { requestUrl, statusUrl } = await reclaimClient.createVerificationRequest()
+        
+            setUrl(requestUrl)
+
+            console.log(url)
+            await reclaimClient.startSession({
+                onSuccessCallback: proof => {
+                  console.log('Verification success', proof)
+                  // Your business logic here
+                },
+                onFailureCallback: error => {
+                  console.error('Verification failed', error)
+                  // Your business logic here to handle the error
+                }
+            })
+      }
+    return (
+        <div className="text-black">
+            
+            <button onClick={() => generateVerificationRequest()} className="h-12 bg-blue-700 hover:bg-blue-800 rounded-md font-bold text-white w-1/3">
+				Generate verification link
+			</button>
+            {url ? (
+                <div className='flex flex-col items-center'>
+                    <div className='bg-white max-w-fit mt-1'>
+                        <QRCode className='p-2' value={url} />
+                    </div>
+                    Scan the QR above or
+                    <a href={url} className='text-blue-700 underline'>Click on this URL </a>
+                </div>
+            ): null}
+        </div>
+    )
+}

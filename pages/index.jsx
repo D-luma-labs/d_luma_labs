@@ -90,7 +90,7 @@ function Home({defaultPosts}) {
               <Header />
 
               {/*  Page sections */}
-              <Hero title="Welcome to the Orbis Forum!" description="Respectful and good-faith discussion should be the cornerstone of any decision-making process. In trying to enact change, please keep this principle in mind." image={<HeroOrbisIcon />} />
+              <Hero title="Welcome to D-Luma-Labs!" description="Respectful and good-faith discussion should be the cornerstone of any decision-making process. In trying to enact change, please keep this principle in mind." image={<HeroOrbisIcon />} />
 
               {/* Page content */}
               <section>

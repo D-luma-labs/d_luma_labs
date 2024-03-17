@@ -4,6 +4,7 @@ import { Logo, PanelRight, SearchIcon, MenuVerticalIcon, LoadingCircle } from ".
 import useOutsideClick from "../hooks/useOutsideClick";
 import { useOrbis, User, UserPopup, Chat, Post } from "@orbisclub/components";
 import { getTimestamp } from "../utils";
+import { useRouter } from 'next/router';
 
 function Header() {
   const { orbis, user, connecting, setConnectModalVis } = useOrbis();
@@ -322,10 +323,55 @@ const UserMenuVertical = ({hide}) => {
 
 /** Search form */
 const SearchBar = () => {
+  const router = useRouter()
+  const isDappsPage = router.pathname === '/dapps';
+  
   const { orbis } = useOrbis();
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
+  const [allData, setAllData] = useState([])
+  ////// Don't forget to implent search functionality here /////
+  if(isDappsPage){
+    console.log("this is the dapps search so work your magic")
+  }
+  
+ // useEffect(() => {
+  //   const fetchAllDapps = async () => {
+  //     const allDapps = []; // Empty array to store all results
+  //     let currentPage = 1; // Starting page number
+  //     let hasMorePages = true; // Flag to track remaining pages
+    
+  //     while (hasMorePages) {
+  //       try {
+  //         const response = await fetch(`https://apis.dappradar.com/v2/dapps?page=${currentPage}&resultsPerPage=10`, {
+  //           headers: { "X-API-KEY": "FVJreKZuah36eqltzner47gfDFEb1GZx4WVoJLbi" }
+  //         });
+  //         const data = await response.json();
+    
+  //         // Check for success and data availability
+  //         if (data.success && data.results.length > 0) {
+  //           allDapps.push(...data.results); // Concatenate new results
+    
+  //           // Update pagination state
+  //           currentPage++;
+  //           hasMorePages = currentPage <= data.pageCount; // Check if there are more pages
+  //         } else {
+  //           console.warn("API call failed or no results found for page:", currentPage);
+  //           hasMorePages = false; // Stop fetching if an error occurs or no results
+  //         }
+  //       } catch (error) {
+  //         console.error("Error fetching Dapps data:", error);
+  //         hasMorePages = false; // Stop fetching on error
+  //       }
+  //     }
+    
+  //     // All pages fetched, set the state with the combined data
+  //     setAllData(allDapps);
+  //     console.log("this is all the dapps: ",allDapps)
+  //   };
+  //   fetchAllDapps()
+  // }, [])
 
   useEffect(() => {
     if(search && search.length > 2) {
@@ -333,6 +379,7 @@ const SearchBar = () => {
     } else {
       setPosts([]);
     }
+
 
     async function loadPosts() {
       setLoading(true);
