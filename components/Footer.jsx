@@ -56,7 +56,7 @@ function Footer() {
             </ul>
 
             {/* Copyright */}
-            <div className="text-sm text-slate-600">Copyright © Orbis Labs. All rights reserved.</div>
+            <div className="text-sm text-slate-600">Copyright © D-luma Labs. All rights reserved.</div>
           </div>
         </div>
       </div>
