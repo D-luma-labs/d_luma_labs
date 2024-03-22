@@ -7,6 +7,7 @@ import { getTimestamp } from "../utils";
 import { useRouter } from 'next/router';
 import HamburgerMenu from './HarmbugerMenu';
 import Sidebar from './HarmbugerMenu';
+import MobileNav from './MainMenuNav';
 
 function Header() {
   const { orbis, user, connecting, setConnectModalVis } = useOrbis();
@@ -53,11 +54,15 @@ function Header() {
             </div>
             <div className="shrink-0 mr-4">
               {/* Logo container */}
+              <MobileNav/>
+            </div>
+            <div className="shrink-0 mr-4">
+              {/* Logo container */}
               <Link href="/" className="text-primary">
                  <Logo /> 
               </Link>
             </div>
-
+            
             {/* Desktop navigation */}
             <nav className="flex grow text-primary">
               {/* Desktop sign in links */}
