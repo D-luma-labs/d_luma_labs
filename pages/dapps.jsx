@@ -26,7 +26,7 @@ export default function Dapps(){
         const fetchDapps = async () => {
             try {
               setLoading(true);
-              const response = await fetch(`https://apis.dappradar.com/v2/dapps?page=${page}&resultsPerPage=12`,{
+              const response = await fetch(`https://apis.dappradar.com/v2/dapps?page=${page}&resultsPerPage=10`,{
                 headers: {"X-API-KEY": "Nctp2yNzbO8ddktOk8LTRVrxRdZmvDraFHY9Rwi3"}
               });
               const data = await response.json();
