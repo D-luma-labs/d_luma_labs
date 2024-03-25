@@ -1,4 +1,6 @@
- import '../styles/globals.css'
+import "../styles/tailwind.css";
+import "../styles/slick.css";
+import '../styles/globals.css'
 import { Orbis, OrbisProvider } from "@orbisclub/components";
 import "@orbisclub/components/dist/index.modern.css";
 
