@@ -11,6 +11,7 @@
   "dependencies": {
     "@orbisclub/components": "^0.2.6",
     "@reclaimprotocol/js-sdk": "^0.1.6",
+    "@reclaimprotocol/reclaim-connect-react": "^0.0.1-beta.14",
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/typography": "^0.5.9",
     "eslint": "8.36.0",

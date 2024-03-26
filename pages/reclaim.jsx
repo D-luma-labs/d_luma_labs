@@ -1,6 +1,7 @@
 import { Reclaim } from '@reclaimprotocol/js-sdk'
 import { useState } from 'react';
 import QRCode from "react-qr-code";
+import { GenerateProof } from '@reclaimprotocol/reclaim-connect-react';
 
 export default function ReclaimPage(){
 
@@ -55,19 +56,39 @@ export default function ReclaimPage(){
       }
     return (
         <div className="text-black">
-            
-            <button onClick={() => generateVerificationRequest()} className="h-12 bg-blue-700 hover:bg-blue-800 rounded-md font-bold text-white w-1/3">
-				Generate verification link
-			</button>
-            {url ? (
-                <div className='flex flex-col items-center'>
-                    <div className='bg-white max-w-fit mt-1'>
-                        <QRCode className='p-2' value={url} />
-                    </div>
-                    Scan the QR above or
-                    <a href={url} className='text-blue-700 underline'>Click on this URL </a>
-                </div>
-            ): null}
+            <GenerateProof
+                appID='0x0d6830A2c8d00b6D98F33C95c5f1ACc03D5d18bB'
+                onProofSubmission={(proofs, sessionId) => { 
+                    console.log(sessionId)
+                    console.log(proofs)
+                    console.log('Proof submitted')
+                }}
+                onProofSubmissionFailed={() => {
+                    console.log('Proof submission failed')
+                }}
+                customize = { 
+                    {
+                    triggerButton: { 
+                    text: 'Generate Proof', 
+                    style: { 
+
+                        } 
+                    },
+                    modalHeader: { 
+                    text: 'SCAN the QR to submit proof', 
+                    style: { 
+
+                        } 
+                    },
+                    proofSubmissionDetails: { 
+                    successText: 'Success', 
+                    failureText: 'Failed', 
+                    style: { 
+
+                        } 
+                    }} 
+          } 
+        />
         </div>
     )
 }
