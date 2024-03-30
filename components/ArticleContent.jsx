@@ -4,13 +4,22 @@ import { Orbis, Discussion, User, useOrbis } from "@orbisclub/components";
 import { shortAddress, getIpfsLink } from "../utils";
 import { ExternalLinkIcon, EditIcon } from "./Icons";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { Vote } from '../models/solana';
+import * as web3 from '@solana/web3.js'
 
 /** For Markdown support */
 import { marked } from 'marked';
 import parse from 'html-react-parser';
+import { useState } from 'react';
+
+const VOTE_PROGRAM_ID = 'CenYq6bDRB7p73EjsPEpiYN7uveyPUTdXkDkgUduboaN'
+const connection = new web3.Connection(web3.clusterApiUrl("devnet"))
+
+
 
 export default function ArticleContent({post}) {
   const { orbis, user } = useOrbis();
+  const [voteCount, setVoteCount] = useState(0)
 
   /** Will replace classic code <pre> support with a more advanced integration */
   const replacePreWithSyntaxHighlighter = (node) => {
@@ -30,7 +39,64 @@ export default function ArticleContent({post}) {
   const htmlContent = marked(markdownContent);
   const reactComponent = parse(htmlContent, { replace: replacePreWithSyntaxHighlighter });
 
+  const publicKey = new web3.PublicKey("69ibNjkeigZRS9z7JhUsFqb2qVYYC2Ds8urY3j9hCKj3")
 
+    const handleVotingLogic = (event) => {
+      setVoteCount((prev) => prev + 1)
+      event.preventDefault()
+      const vote = new Vote(post.content.context, voteCount, user.metadata.address)
+      console.log("this is the vote ", vote)
+      handleTransactionSubmit(vote)
+  }
+
+  const handleTransactionSubmit = async (vote) => {
+      if (!publicKey) {
+          alert('Please connect your wallet!')
+          return
+      }
+
+      const buffer = vote.serialize()
+      const transaction = new web3.Transaction()
+
+      const [pda] = web3.PublicKey.findProgramAddressSync(
+          [publicKey.toBuffer(), new TextEncoder().encode(vote.VoteCount)],
+          new web3.PublicKey(VOTE_PROGRAM_ID)
+      )
+
+      const instruction = new web3.TransactionInstruction({
+          keys: [
+              {
+                  pubkey: publicKey,
+                  isSigner: true,
+                  isWritable: false,
+              },
+              {
+                  pubkey: pda,
+                  isSigner: false,
+                  isWritable: true
+              },
+              {
+                  pubkey: web3.SystemProgram.programId,
+                  isSigner: false,
+                  isWritable: false
+              }
+          ],
+          data: buffer,
+          programId: new web3.PublicKey(VOTE_PROGRAM_ID)
+      })
+
+      transaction.add(instruction)
+
+      try {
+          let txid = await web3.sendAndConfirmTransaction(connection, transaction, [publicKey])
+          console.log("this is the transactionId ", txid)
+          alert(`Transaction submitted: https://explorer.solana.com/tx/${txid}?cluster=devnet`)
+          console.log(`Transaction submitted: https://explorer.solana.com/tx/${txid}?cluster=devnet`)
+      } catch (e) {
+          console.log(JSON.stringify(e))
+          alert(JSON.stringify(e))
+      }
+  }
   return(
     <>
       <article className="w-full mb-8 pr-6">
@@ -58,6 +124,19 @@ export default function ArticleContent({post}) {
                   <Link href={"/edit/" + post.stream_id} className="btn-sm py-1.5 btn-brand"><EditIcon style={{marginRight: 4}} />Edit</Link>
                 </>
               }
+
+              {user && (
+                <>
+                <button className="btn-sm ml-2 py-1.5 btn-brand" onClick={handleVotingLogic}>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1 inline-block" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a7.97 7.97 0 0 1-6.308-3.093c.98-2.4 3.206-4.163 6.308-5.373 3.102 1.21 5.328 2.973 6.308 5.373A7.97 7.97 0 0 1 10 18zm-1-8a1 1 0 1 1 2 0v3a1 1 0 0 1-2 0V10z" clipRule="evenodd" />
+                  </svg>
+                  Vote
+                </button>
+                {/* This is the vote count */}
+                <span className='ml-3 text-2xl'>3</span>
+                </>
+              )}
             </div>
           </div>
         </header>

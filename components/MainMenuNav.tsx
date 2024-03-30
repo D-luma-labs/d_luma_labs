@@ -24,23 +24,34 @@ const MobileNav = ({ isAuth, isSubscribed }: {isAuth: boolean, isSubscribed: boo
         }
     }
   return (
-    <div className='sm:hidden'>
+    <div className='block'>
         <Menu 
         onClick={toggleOpen} 
-        className='relative z-50 h-5 w-5 text-zinc-700'
+        className='relative z-50 h-10 w-10 text-zinc-700'
+        
         />
         {isOpen ? (
-            <div className='fixed animate-in slide-in-from-top-5 fade-in-20 inset-0 z-0 w-full'>
-                <ul className='absolute bg-white border-b border-zinc-200 shadow-xl grid w-full gap-3 px-10 pt-20 pb-8'>
+            <div className='fixed animate-in slide-in-from-top-5 fade-in-20 inset-0 z-40 w-full'>
+                <ul className='absolute bg-white bg-opacity-200  border-b border-zinc-200 shadow-xl grid w-full gap-3 px-10 pt-20 pb-8'>
                     {true ? (
                        <>
                         <li>
                             <Link 
-                            onClick={() => closeOnCurrent('/community')}
-                            href='/community'
+                            onClick={() => closeOnCurrent('/')}
+                            href='/'
                             className='flex items-center w-full font-semibold text-purple-600'
                             >
-                                Community <ArrowRight className='ml-2 h-5 w-5'/>
+                                Home <ArrowRight className='ml-2 h-5 w-5'/>
+                            </Link>
+                        </li>
+                        <li className='my-3 h-px w-full bg-gray-300'/>
+                        <li>
+                            <Link 
+                            onClick={() => closeOnCurrent('/community')}
+                            href='/community'
+                            className='flex items-center w-full font-semibold text-black'
+                            >
+                               Community
                             </Link>
                         </li>
 
@@ -49,7 +60,7 @@ const MobileNav = ({ isAuth, isSubscribed }: {isAuth: boolean, isSubscribed: boo
                             <Link 
                             onClick={() => closeOnCurrent('/dapps')}
                             href='/dapps'
-                            className='flex items-center w-full font-semibold'
+                            className='flex items-center w-full font-semibold text-black'
                             >
                                Dapp Store 
                             </Link>
@@ -59,21 +70,12 @@ const MobileNav = ({ isAuth, isSubscribed }: {isAuth: boolean, isSubscribed: boo
                             <Link 
                             onClick={() => closeOnCurrent('/tool-store')}
                             href='/tool-store'
-                            className='flex items-center w-full font-semibold'
+                            className='flex items-center w-full font-semibold text-black'
                             >
                                Tools Store
                             </Link>
                         </li>
-                        <li className='my-3 h-px w-full bg-gray-300'/>
-                        <li>
-                            <Link 
-                            onClick={() => closeOnCurrent('/about')}
-                            href='/about'
-                            className='flex items-center w-full font-semibold'
-                            >
-                               About
-                            </Link>
-                        </li>
+                        
                        </>
                     ) : null}
                 </ul>

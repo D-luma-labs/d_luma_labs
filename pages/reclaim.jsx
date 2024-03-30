@@ -29,7 +29,7 @@ export default function ReclaimPage(){
             ('for d-luma-labs truth chain platform. This will improve the platofrm with authentic data Thanks!!')
         )
 
-        await reclaimClient.buildProofRequest(providerIdsUber[0])
+        await reclaimClient.buildProofRequest(providerIds[0])
 
         reclaimClient.setSignature(
             await reclaimClient.generateSignature(

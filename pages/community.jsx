@@ -20,7 +20,8 @@ function Community({defaultPosts}) {
   /** Load all of the categories (sub-contexts) available in this forum */
   useEffect(() => {
     loadContexts();
-
+ 
+    
     /** Load all categories / contexts under the global forum context */
     async function loadContexts() {
       let { data, error } = await orbis.api.from("orbis_contexts").select().eq('context', global.orbis_context).order('created_at', { ascending: false });
