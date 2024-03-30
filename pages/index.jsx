@@ -149,7 +149,7 @@ const HeroSection = () => {
             <div className="flex flex-row items-center">
               {/* Copy */}
               <div className="flex flex-col md:pr-32">
-                <h1 className="text-3xl font-bold text-primary pb-3">Welcome to D-Luma-Labs the First Aid of the Solana-Ecosystem</h1>
+                <h1 className="text-3xl font-bold text-primary pb-3">Welcome to D-Luma-Labs - Your Gateway to the Solana Ecosystem!</h1>
                 <p className="text-lg text-secondary">Join our vibrant community to discuss, suggest, and vote on tools and DApps for the Solana ecosystem. Whether you&apos;re looking to share ideas, solve challenges, or contribute to the growth of Solana Ecosystem, we welcome your participation!</p>
                </div>
 
@@ -169,7 +169,7 @@ const CategoriesSection = ({ categories, loading }) => {
   return (
     <section className="py-16">
       <div className="container mx-auto">
-        <h2 className="text-3xl font-bold text-center mb-12">Explore Categories</h2>
+        <h2 className="text-3xl font-bold text-center mb-12 text-black">Explore Categories</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {loading ? (
             <LoadingCircle />
