@@ -6,21 +6,20 @@ import { ExternalLinkIcon, EditIcon } from "./Icons";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { Vote } from '../models/solana';
 import * as web3 from '@solana/web3.js'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 /** For Markdown support */
 import { marked } from 'marked';
 import parse from 'html-react-parser';
 import { useState } from 'react';
 
-const VOTE_PROGRAM_ID = 'CenYq6bDRB7p73EjsPEpiYN7uveyPUTdXkDkgUduboaN'
-const connection = new web3.Connection(web3.clusterApiUrl("devnet"))
-
-
-
 export default function ArticleContent({post}) {
   const { orbis, user } = useOrbis();
-  const [voteCount, setVoteCount] = useState(0)
-
+  const [voteCount, setVoteCount] = useState(post.content.data.voteCount || 0)
+  const [hasVoted, setHasVoted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const myToast = toast()
   /** Will replace classic code <pre> support with a more advanced integration */
   const replacePreWithSyntaxHighlighter = (node) => {
     if (node.type === 'tag' && node.name === 'pre') {
@@ -39,15 +38,41 @@ export default function ArticleContent({post}) {
   const htmlContent = marked(markdownContent);
   const reactComponent = parse(htmlContent, { replace: replacePreWithSyntaxHighlighter });
 
-  const publicKey = new web3.PublicKey("69ibNjkeigZRS9z7JhUsFqb2qVYYC2Ds8urY3j9hCKj3")
+  const handleVotingLogic = async (event) => {
+    event.preventDefault();
+    try {
 
-    const handleVotingLogic = (event) => {
-      setVoteCount((prev) => prev + 1)
-      event.preventDefault()
-      const vote = new Vote(post.content.context, voteCount, user.metadata.address)
-      console.log("this is the vote ", vote)
-      handleTransactionSubmit(vote)
-  }
+      if(!post?.content?.data?.userWalletAddress){
+          setVoteCount((prev) => prev + 1);
+    
+          console.log("this is the voteCount ", voteCount)
+          // Create a new object with updated data
+          const updatedData = { ...post.content.data, voteCount: voteCount, userWalletAddress: user.metadata.address };
+      
+          // Create a new content object with updated data
+          const updatedContent = { ...post.content, data: updatedData };
+      
+          // Attempt to edit the post with the updated content
+          const res = await orbis.editPost(post.stream_id, updatedContent);
+      
+          if (res.status === 200) {
+            console.log('Post likes updated successfully');
+            toast("Vote Successfully", {position: "top-center", className: "bg-black"})
+          } else {
+            console.error('Failed to update post likes', res);
+          }
+      }else{
+        toast
+      }
+     
+    } catch (error) {
+      console.error('Error updating post likes:', error);
+    }
+  };
+  
+  console.log("this is the user " , user)
+  
+  
 
   const handleTransactionSubmit = async (vote) => {
       if (!publicKey) {
@@ -125,18 +150,29 @@ export default function ArticleContent({post}) {
                 </>
               }
 
-              {user && (
+              {user  ?(
                 <>
-                <button className="btn-sm ml-2 py-1.5 btn-brand" onClick={handleVotingLogic}>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1 inline-block" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10 18a7.97 7.97 0 0 1-6.308-3.093c.98-2.4 3.206-4.163 6.308-5.373 3.102 1.21 5.328 2.973 6.308 5.373A7.97 7.97 0 0 1 10 18zm-1-8a1 1 0 1 1 2 0v3a1 1 0 0 1-2 0V10z" clipRule="evenodd" />
-                  </svg>
+                
+                  <button className="btn-sm ml-2 py-1.5 btn-brand" onClick={handleVotingLogic}>
+                  {loading ? ( // Render spinner if loading
+                    <svg className="animate-spin h-5 w-5 mr-1 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <circle cx="12" cy="12" r="10" strokeWidth="2" />
+                    </svg>
+                  ) : (
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1 inline-block" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 18a7.97 7.97 0 0 1-6.308-3.093c.98-2.4 3.206-4.163 6.308-5.373 3.102 1.21 5.328 2.973 6.308 5.373A7.97 7.97 0 0 1 10 18zm-1-8a1 1 0 1 1 2 0v3a1 1 0 0 1-2 0V10z" clipRule="evenodd" />
+                    </svg>
+                  )}
                   Vote
-                </button>
+                </button>;
+                 
                 {/* This is the vote count */}
-                <span className='ml-3 text-2xl'>3</span>
+                  { post?.content?.data?.voteCount ?
+                    <span className='ml-3 text-2xl'>{voteCount}</span>:
+                    null
+                  }
                 </>
-              )}
+              ) : null}
             </div>
           </div>
         </header>

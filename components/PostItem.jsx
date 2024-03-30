@@ -11,46 +11,11 @@ export default function PostItem({post}) {
   const [canVote, setCanVote] = useState(false);
   const context = post.context_details.context_details.displayName
 
-    // useEffect(() => {
-    //   const url = `https://mainnet.helius-rpc.com/?api-key=f291f56b-6890-419f-baa7-cbccb0f511ae`
-    //   const ownerFornow = "86xCnPeV69n6t3DnyGvkKobf9FdN2H9oiVDdaMpo2MMY"
-    //   const getAssetsByOwner = async () => {
-    //     const response = await fetch(url, {
-    //       method: 'POST',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //       body: JSON.stringify({
-    //         jsonrpc: '2.0',
-    //         id: 'my-id',
-    //         method: 'getAssetsByOwner',
-    //         params: {
-    //           ownerAddress: `86xCnPeV69n6t3DnyGvkKobf9FdN2H9oiVDdaMpo2MMY`,
-    //           page: 1, // Starts at 1
-    //           limit: 1000,
-    //         },
-    //       }),
-    //     });
-    //     const { result } = await response.json();
-    //     console.log("Assets by Owner: ", result?.items);
-    //     const names = result?.items.map((item) => {
-    //       return item.content.metadata.name
-    //     })
-    //     console.log("these are the names ", names)
-    //   };
-    //   getAssetsByOwner(); 
-    //   // Check if the post context is "suggestion"
-    //   if (context === "Suggestions") {
-    //     // Check if the user has a particular Solana-based token (e.g., check user's wallet)
-    //     // You will need to replace `YOUR_TOKEN_ID` with the actual token ID
-    //     // const userHasToken = user && user.wallet && user.wallet.tokens.includes("YOUR_TOKEN_ID");
-    //     // setCanVote(userHasToken);
-    //     // post.context === "suggestion"
-    //     // console.log("this is the usser",user.metadata.address)
-    //     console.log("this is the post",post)
-    //     console.log("this is the context name",context)
-    //   }
-    // }, [getAssetsByOwner]);
+    useEffect(() => {
+      if (context === "Suggestions") {
+        console.log("this is the context ", context)
+      }
+    }, []);
   return (
     <div className="[&:nth-child(-n+4)]:-order-1 bg-[#F9FAFB] rounded border border-slate-200">
       <div className="relative p-5">
@@ -88,7 +53,13 @@ export default function PostItem({post}) {
                 {/** Render vote button if user can vote for suggestion and also add vote count*/}
                 {true && (
                   <Link href={"/post/" + post.stream_id} className="hidden md:flex text-primary px-2 py-1 font-medium text-xs items-center space-y-2 rounded-md border border-transparent hover:bg-white hover:border-gray-200" >
-                   <span className='mr-1'>3</span> Vote
+                   { post?.content?.data?.voteCount ?
+                    <span className='ml-3 flex'>
+                      <span>{post.content.data.voteCount} </span>
+                      <span className='ml-1'>Vote</span>
+                    </span>:
+                    null
+                    } 
                   </Link>
                 )}
 

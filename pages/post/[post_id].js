@@ -9,6 +9,7 @@ import { Orbis, Comments, User, useOrbis } from "@orbisclub/components";
 
 export default function Post({ post, post_id }) {
   const { orbis, user } = useOrbis();
+  console.log("this is the post, ", post)
   return (
     <>
       <Head>
