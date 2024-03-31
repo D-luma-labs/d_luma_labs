@@ -13,19 +13,20 @@ import 'react-toastify/dist/ReactToastify.css';
 import { marked } from 'marked';
 import parse from 'html-react-parser';
 import { useState } from 'react';
+const SUGGESSTION_CONTEXT = 'kjzl6cwe1jw14bb043cfhbh2e5vjuxfxz74ucvyhu9m1k4eja9rvevqw45sku0l'
 
 export default function ArticleContent({post}) {
   const { orbis, user } = useOrbis();
-  const [voteCount, setVoteCount] = useState(post.content.data.voteCount || 0)
+  const [voteCount, setVoteCount] = useState(post?.content?.data?.voteCount || 0)
   const [hasVoted, setHasVoted] = useState(false)
   const [loading, setLoading] = useState(false)
-  const myToast = toast()
+ 
   /** Will replace classic code <pre> support with a more advanced integration */
   const replacePreWithSyntaxHighlighter = (node) => {
     if (node.type === 'tag' && node.name === 'pre') {
       const codeNode = node.children.find((child) => child.name === 'code');
       const language = codeNode.attribs.class?.split('-')[1] || ''; // Assumes a format like "language-js"
-
+      
       return (
         <SyntaxHighlighter language="javascript" style={theme}>
           {codeNode.children[0].data}
@@ -40,14 +41,16 @@ export default function ArticleContent({post}) {
 
   const handleVotingLogic = async (event) => {
     event.preventDefault();
-    try {
 
-      if(!post?.content?.data?.userWalletAddress){
-          setVoteCount((prev) => prev + 1);
+    try {
+        if(post?.content?.data?.userWalletAddress){
+          setVoteCount((prevVoteCount) => prevVoteCount + 1);
+          console.log("this is the voteCount ", voteCount)
+          setLoading(true)
     
           console.log("this is the voteCount ", voteCount)
           // Create a new object with updated data
-          const updatedData = { ...post.content.data, voteCount: voteCount, userWalletAddress: user.metadata.address };
+          const updatedData = { ...post.content.data, voteCount: post?.content?.data?.voteCount + 1, userWalletAddress: user?.metadata?.address };
       
           // Create a new content object with updated data
           const updatedContent = { ...post.content, data: updatedData };
@@ -56,22 +59,29 @@ export default function ArticleContent({post}) {
           const res = await orbis.editPost(post.stream_id, updatedContent);
       
           if (res.status === 200) {
+            setHasVoted(true)
             console.log('Post likes updated successfully');
-            toast("Vote Successfully", {position: "top-center", className: "bg-black"})
+            setLoading(false)
+            toast.success("Vote Successfully!")
+            
           } else {
+            setVoteCount((prevVoteCount) => prevVoteCount - 1);
             console.error('Failed to update post likes', res);
-          }
-      }else{
-        toast
-      }
-     
+            setLoading(false);
+            toast.error("Failed to vote.");
+          }  
+        }else{
+          toast.warn("Can't vote twice!");
+        }
     } catch (error) {
+      toast.error("Error occured!");
       console.error('Error updating post likes:', error);
     }
   };
   
-  console.log("this is the user " , user)
-  
+ 
+  console.log("this is the user ", user)
+  console.log("this is the post ", post)
   
 
   const handleTransactionSubmit = async (vote) => {
@@ -152,23 +162,28 @@ export default function ArticleContent({post}) {
 
               {user  ?(
                 <>
-                
-                  <button className="btn-sm ml-2 py-1.5 btn-brand" onClick={handleVotingLogic}>
-                  {loading ? ( // Render spinner if loading
-                    <svg className="animate-spin h-5 w-5 mr-1 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                      <circle cx="12" cy="12" r="10" strokeWidth="2" />
-                    </svg>
-                  ) : (
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1 inline-block" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a7.97 7.97 0 0 1-6.308-3.093c.98-2.4 3.206-4.163 6.308-5.373 3.102 1.21 5.328 2.973 6.308 5.373A7.97 7.97 0 0 1 10 18zm-1-8a1 1 0 1 1 2 0v3a1 1 0 0 1-2 0V10z" clipRule="evenodd" />
-                    </svg>
-                  )}
-                  Vote
-                </button>;
-                 
+                {SUGGESSTION_CONTEXT === post.context ?
+                  <button 
+                    className={`btn-sm ml-2 py-1.5 ${hasVoted ? 'btn-gray' : 'btn-brand'}`} // Apply different styles based on voting state
+                    onClick={handleVotingLogic}
+                    disabled={hasVoted} // Disable the button if user has already voted
+                  >
+                    {loading ? ( // Render spinner if loading
+                      <svg className="animate-spin h-5 w-5 mr-1 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <circle cx="12" cy="12" r="10" strokeWidth="2" />
+                      </svg>
+                    ) : (
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1 inline-block" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M10 18a7.97 7.97 0 0 1-6.308-3.093c.98-2.4 3.206-4.163 6.308-5.373 3.102 1.21 5.328 2.973 6.308 5.373A7.97 7.97 0 0 1 10 18zm-1-8a1 1 0 1 1 2 0v3a1 1 0 0 1-2 0V10z" clipRule="evenodd" />
+                      </svg>
+                    )}
+                    {hasVoted ? 'Voted' : 'Vote'} {/* Change text based on voting state */}
+                  </button>
+                 :null}
+
                 {/* This is the vote count */}
                   { post?.content?.data?.voteCount ?
-                    <span className='ml-3 text-2xl'>{voteCount}</span>:
+                    <span className='ml-3 text-2xl text-black'>{voteCount}</span>:
                     null
                   }
                 </>

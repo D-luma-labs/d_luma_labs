@@ -65,7 +65,7 @@ export default function PostItem({post}) {
 
                 {/** Proof link to Cerscan */}
                 {post.stream_id &&
-                  <Link href={"https://cerscan.com/mainnet/stream/" + post.stream_id} target="_blank" className="hidden md:flex text-primary text-xs bg-white border border-gray-200 rounded-md py-1 px-2 font-medium flex flex-row items-center hover:underline"><ExternalLinkIcon style={{marginRight: 4}} />{shortAddress(post.stream_id, 12)}</Link>
+                  <Link href={"https://cerscan.com/mainnet/stream/" + post.stream_id} target="_blank" className="md:flex text-primary text-xs bg-white border border-gray-200 rounded-md py-1 px-2 font-medium flex flex-row items-center hover:underline"><ExternalLinkIcon style={{marginRight: 4}} />{shortAddress(post.stream_id, 12)}</Link>
                 }
               </div>
             </div>

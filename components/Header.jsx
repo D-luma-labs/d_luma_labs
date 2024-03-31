@@ -5,8 +5,6 @@ import useOutsideClick from "../hooks/useOutsideClick";
 import { useOrbis, User, UserPopup, Chat, Post } from "@orbisclub/components";
 import { getTimestamp } from "../utils";
 import { useRouter } from 'next/router';
-import HamburgerMenu from './HarmbugerMenu';
-import Sidebar from './HarmbugerMenu';
 import MobileNav from './MainMenuNav';
 
 function Header() {
@@ -50,7 +48,6 @@ function Header() {
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Site branding */}
             <div className="shrink-0 mr-4 text-black">
-            <Sidebar/>
             </div>
             <div className="shrink-0 mr-4">
               {/* Logo container */}

@@ -1,6 +1,8 @@
  import '../styles/globals.css'
 import { Orbis, OrbisProvider } from "@orbisclub/components";
 import "@orbisclub/components/dist/index.modern.css";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 /** Set the global forum context here (you can create categories using the dashboard by clicking on "Create a sub-context" from your main forum context) */
 global.orbis_context = "kjzl6cwe1jw1482gp9vd5kn8b8dsru1l7w5ztdb9pctc9konioqu3c3g9g7qslh";
@@ -16,5 +18,9 @@ let orbis = new Orbis({
 });
 
 export default function App({ Component, pageProps }) {
-  return <OrbisProvider defaultOrbis={orbis}><Component {...pageProps} /></OrbisProvider>
+  return (
+  <OrbisProvider defaultOrbis={orbis}>
+    <Component {...pageProps} />
+    <ToastContainer />
+  </OrbisProvider>)
 }
