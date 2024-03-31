@@ -20,6 +20,7 @@ const LandingPageHeader = () => {
                         <NavItem href="/community">Community</NavItem>
                         <NavItem href="/tool-store">Tool Store</NavItem>
                         <NavItem href="/dapps">D-App-Store</NavItem>
+                        
                     </ul>
                 </nav>
 

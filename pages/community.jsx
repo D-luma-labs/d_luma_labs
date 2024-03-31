@@ -166,6 +166,9 @@ const CategoriesNavigation = ({ categories, nav, setNav }) => {
         <div className="mb-4 md:mb-0 md:order-1 md:ml-6">
           <Link className="btn-sm py-1.5 btn-brand" href="/create">Create Post</Link>
         </div>
+        <div className="mb-4 md:mb-0 md:order-1 md:ml-6">
+          <Link className="btn-sm py-1.5 btn-brand" href="https://surveyheart.com/form/6607550fa3ea3a20fd069db1">Ask For Help</Link>
+        </div>
 
         {/* Left: Links */}
         <ul className="grow inline-flex flex-wrap text-sm font-medium -mx-3 -my-1">
