@@ -13,6 +13,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import ResponsivePagination from 'react-responsive-pagination';
 import 'react-responsive-pagination/themes/classic.css';
 
+const url = `https://apis.dappradar.com/v2/dapps?page=${page}&resultsPerPage=10`
 
 export default function Dapps(){
 
@@ -22,22 +23,36 @@ export default function Dapps(){
     const [loading, setLoading] = useState(true);
     const [totalPages, setTotalPages] = useState(0);
     const [currentPage, setCurrentPage] = useState(0)
+
     useEffect(() => {
         const fetchDapps = async () => {
-            try {
-              setLoading(true);
-              const response = await fetch(`https://apis.dappradar.com/v2/dapps?page=${page}&resultsPerPage=10`,{
-                headers: {"X-API-KEY": "Nctp2yNzbO8ddktOk8LTRVrxRdZmvDraFHY9Rwi3"}
-              });
-              const data = await response.json();
-              console.log(data)
-              setDapps(data.results);
-              setTotalPages(data.pageCount);
-              setLoading(false);
-            } catch (error) {
-              console.error('Error fetching dapps:', error);
-              setLoading(false);
-            }
+          try {
+            // Set loading state to true to indicate data fetching is in progress
+            setLoading(true);
+        
+            // Perform a fetch request to the specified URL
+            const response = await fetch(url, {
+                // Set custom header with X-API-KEY using the value from process.env.DAPP_API
+                headers: {"X-API-KEY": process.env.DAPP_API}
+            });
+        
+            // Parse the response body as JSON
+            const data = await response.json();
+        
+            // Extract required data from the response and update state
+            setDapps(data.results);
+            setTotalPages(data.pageCount);
+        
+            // Set loading state to false to indicate data fetching is complete
+            setLoading(false);
+        } catch (error) {
+            // Handle any errors that occur during the fetch operation
+            console.error('Error fetching dapps:', error);
+        
+            // Set loading state to false to indicate data fetching encountered an error
+            setLoading(false);
+        }
+        
           };
           fetchDapps();
     }, [page])
