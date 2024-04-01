@@ -27,11 +27,11 @@ const MobileNav = ({ isAuth, isSubscribed }: {isAuth: boolean, isSubscribed: boo
     <div className='block'>
         <Menu 
         onClick={toggleOpen} 
-        className='relative z-50 h-10 w-10 text-zinc-700'
+        className='relative h-10 w-10 text-zinc-700'
         
         />
         {isOpen ? (
-            <div className='fixed animate-in slide-in-from-top-5 fade-in-20 inset-0 z-40 w-full'>
+            <div className='fixed animate-in slide-in-from-top-5 fade-in-20 inset-0 z-50 w-full'>
                 <ul className='absolute bg-white bg-opacity-200  border-b border-zinc-200 shadow-xl grid w-full gap-3 px-10 pt-20 pb-8'>
                     {true ? (
                        <>
@@ -62,6 +62,16 @@ const MobileNav = ({ isAuth, isSubscribed }: {isAuth: boolean, isSubscribed: boo
                             className='flex items-center w-full font-semibold text-black'
                             >
                                Create Post
+                            </Link>
+                        </li>
+                        <li className='my-3 h-px w-full bg-gray-300'/>
+                        <li>
+                            <Link 
+                            onClick={() => closeOnCurrent('https://surveyheart.com/form/6607550fa3ea3a20fd069db1')}
+                            href='https://surveyheart.com/form/6607550fa3ea3a20fd069db1'
+                            className='flex items-center w-full font-semibold text-black'
+                            >
+                               Colosseum Special
                             </Link>
                         </li>
 

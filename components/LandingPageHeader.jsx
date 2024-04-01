@@ -5,7 +5,7 @@ import MobileNav from './MainMenuNav';
 
 const LandingPageHeader = () => {
     return (
-        <header className="bg-gradient-to-b from-blue-100 sticky to-white shadow-md">
+        <header className="bg-gradient-to-b from-blue-100 sticky to-white shadow-md ">
             <div className="container mx-auto flex items-center justify-between px-4 py-4 md:py-6">
                 {/* Logo */}
                 <div className="flex-shrink-0 mr-4">
@@ -19,6 +19,7 @@ const LandingPageHeader = () => {
                         <NavItem href="/">Home</NavItem>
                         <NavItem href="/community">Community</NavItem>
                         <NavItem href="/tool-store">Tool Store</NavItem>
+                        <NavItem href="https://surveyheart.com/form/6607550fa3ea3a20fd069db1">Colosseum Special</NavItem>
                         <NavItem href="/dapps">D-App-Store</NavItem>
                         
                     </ul>

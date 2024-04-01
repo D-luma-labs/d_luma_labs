@@ -55,54 +55,33 @@ const BenefitsSection = () => {
         <h2 className="text-3xl font-bold text-center mb-8 text-black">Benefits of Joining</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Benefit 1 */}
-          <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-6 transition duration-300 ease-in-out transform hover:-translate-y-1">
-            {/* Icon */}
+          <div className="bg-white p-6 rounded-lg shadow-md">
             <Logo className="text-purple-600 w-12 h-12 mb-2" />
             <h3 className="text-lg font-semibold mb-2 text-gray-900">Access to Cutting-Edge Insights</h3>
-            <p className="text-gray-700 text-center">Stay ahead of the curve with exclusive access to insights, trends, and updates in the Solana ecosystem.</p>
+            <p className="text-gray-700">Stay ahead of the curve with exclusive access to insights, trends, and updates in the Solana ecosystem.</p>
           </div>
           {/* Benefit 2 */}
-          <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-6 transition duration-300 ease-in-out transform hover:-translate-y-1">
-            {/* Icon */}
+          <div className="bg-white p-6 rounded-lg shadow-md">
             <Logo className="text-purple-600 w-12 h-12 mb-2" />
             <h3 className="text-lg font-semibold mb-2 text-gray-900">Networking Opportunities</h3>
-            <p className="text-gray-700 text-center">Connect with like-minded individuals, industry experts, and innovators in the Solana community.</p>
+            <p className="text-gray-700">Connect with like-minded individuals, industry experts, and innovators in the Solana community.</p>
           </div>
           
-          {/* Benefit 4 */}
-          <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-6 transition duration-300 ease-in-out transform hover:-translate-y-1">
-            {/* Icon */}
+          {/* Benefit 3 */}
+          <div className="bg-white p-6 rounded-lg shadow-md">
             <Logo className="text-purple-600 w-12 h-12 mb-2" />
             <h3 className="text-lg font-semibold mb-2 text-gray-900">Community-Led Learning</h3>
-            <p className="text-gray-700 text-center">Engage in interactive discussions, workshops, and educational resources curated by community members.</p>
+            <p className="text-gray-700">Engage in interactive discussions, workshops, and educational resources curated by community members.</p>
           </div>
-          <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-6 transition duration-300 ease-in-out transform hover:-translate-y-1">
-            {/* Icon */}
-            <Logo className="text-purple-600 w-12 h-12 mb-2" />
-            <h3 className="text-lg font-semibold mb-2 text-gray-900">Project Collaboration Opportunities</h3>
-            <p className="text-gray-700 text-center">Collaborate with other members on exciting projects and initiatives to drive innovation within the Solana ecosystem.</p>
-          </div>
-          {/* Benefit 7 */}
-          <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-6 transition duration-300 ease-in-out transform hover:-translate-y-1">
-              {/* Icon */}
-              <Logo className="text-purple-600 w-12 h-12 mb-2" />
-              <h3 className="text-lg font-semibold mb-2 text-gray-900">Support for Hackathon Projects</h3>
-              <p className="text-gray-700 text-center">
-                  Participate in hackathons and leverage our platform to promote and support your projects. Gain exposure to a wider audience and receive feedback and assistance from fellow competitors and community members.
-              </p>
-          </div>
-          {/* Benefit 8 */}
-          <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-6 transition duration-300 ease-in-out transform hover:-translate-y-1">
-            {/* Icon */}
-            <Logo className="text-purple-600 w-12 h-12 mb-2" />
-            <h3 className="text-lg font-semibold mb-2 text-gray-900">Opportunity to Shape the Future</h3>
-            <p className="text-gray-700 text-center">Play an active role in shaping the future of the Solana ecosystem by contributing your ideas, feedback, and expertise.</p>
-          </div>
+          
+          {/* Repeat similar structure for other benefits */}
+          
         </div>
       </div>
     </section>
   );
 };
+
 
 
 
@@ -137,14 +116,14 @@ const TestimonialsSection = () => {
 
 const HeroSection = () => {
   return (
-    <section className="relative overflow-hidden mt-8 mb-[-80px]">
+    <section>
       {/* Bg */}
-      <div className="absolute inset-0 bg-opacity-60 pointer-events-none -z-10" aria-hidden="true" />
+      <div className="absolute inset-0 bg-opacity-60 pointer-events-none" aria-hidden="true" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="pt-6 pb-6">
           {/* Hero content */}
-          <div className="relative max-w-xl mx-auto md:max-w-none text-center md:text-left flex flex-col md:flex-row">
+          <div className="max-w-xl mx-auto md:max-w-none text-center md:text-left flex flex-col md:flex-row">
             {/* Content */}
             <div className="flex flex-row items-center">
               {/* Copy */}
@@ -186,7 +165,7 @@ const CategoriesSection = ({ categories, loading }) => {
 
 const CategoryCard = ({ category }) => {
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 transition duration-300 ease-in-out transform hover:-translate-y-1">
+    <div className="bg-white rounded-lg shadow-md p-6">
       <h3 className="text-xl font-semibold mb-4 text-black">{category.content.displayName}</h3>
       <p className="text-black">{category.content.description}</p>
       <Link href={`/category/${category.stream_id}`}>
