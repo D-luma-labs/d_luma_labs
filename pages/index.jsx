@@ -73,6 +73,22 @@ const BenefitsSection = () => {
             <h3 className="text-lg font-semibold mb-2 text-gray-900">Community-Led Learning</h3>
             <p className="text-gray-700">Engage in interactive discussions, workshops, and educational resources curated by community members.</p>
           </div>
+
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <Logo className="text-purple-600 w-12 h-12 mb-2" />
+            <h3 className="text-lg font-semibold mb-2 text-gray-900">Project Collaboration Opportunities</h3>
+            <p className="text-gray-700">Collaborate with other members on exciting projects and initiatives to drive innovation within the Solana ecosystem.</p>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <Logo className="text-purple-600 w-12 h-12 mb-2" />
+            <h3 className="text-lg font-semibold mb-2 text-gray-900">Support for Hackathon Projects</h3>
+            <p className="text-gray-700">Participate in hackathons and leverage our platform to promote and support your projects.Gain exposure to a wider audience and receive feedback and assistance from competitors and community members.</p>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <Logo className="text-purple-600 w-12 h-12 mb-2" />
+            <h3 className="text-lg font-semibold mb-2 text-gray-900">Opportunity to Shape the Future</h3>
+            <p className="text-gray-700">Play active role in shaping the future of the Solana ecosystem by contributing your ideas, feedback, and expertise.</p>
+          </div>
           
           {/* Repeat similar structure for other benefits */}
           
