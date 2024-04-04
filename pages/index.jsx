@@ -184,7 +184,7 @@ const CategoryCard = ({ category }) => {
     <div className="bg-white rounded-lg shadow-md p-6">
       <h3 className="text-xl font-semibold mb-4 text-black">{category.content.displayName}</h3>
       <p className="text-black">{category.content.description}</p>
-      <Link href={`/category/${category.stream_id}`}>
+      <Link href={`/community`}>
         <p className="block mt-4 text-brand hover:underline">View Posts</p>
       </Link>
     </div>
