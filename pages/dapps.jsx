@@ -36,7 +36,7 @@ export default function Dapps(){
         
             // Parse the response body as JSON
             const data = await response.json();
-        
+         console.log("this is the results", data.results)
             // Extract required data from the response and update state
             setDapps(data.results);
             setTotalPages(data.pageCount);
