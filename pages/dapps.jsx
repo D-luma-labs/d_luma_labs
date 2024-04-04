@@ -13,8 +13,6 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import ResponsivePagination from 'react-responsive-pagination';
 import 'react-responsive-pagination/themes/classic.css';
 
-const url = `https://apis.dappradar.com/v2/dapps?page=${page}&resultsPerPage=10`
-
 export default function Dapps(){
 
     const { orbis, user, setConnectModalVis } = useOrbis();
@@ -31,9 +29,9 @@ export default function Dapps(){
             setLoading(true);
         
             // Perform a fetch request to the specified URL
-            const response = await fetch(url, {
+            const response = await fetch(`https://apis.dappradar.com/v2/dapps?page=${page}&resultsPerPage=10`, {
                 // Set custom header with X-API-KEY using the value from process.env.DAPP_API
-                headers: {"X-API-KEY": process.env.DAPP_API}
+                headers: {"X-API-KEY": "Nctp2yNzbO8ddktOk8LTRVrxRdZmvDraFHY9Rwi3"}
             });
         
             // Parse the response body as JSON
